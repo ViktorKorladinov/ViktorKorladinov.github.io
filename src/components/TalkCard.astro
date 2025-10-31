@@ -73,7 +73,7 @@ const { talk, past = false } = Astro.props;
     <!-- Embedded video for past talks -->
     {past && talk.youtubeEmbed && (
             <div class="mt-4 aspect-video rounded-lg overflow-hidden shadow">
-                <iframe width="560" height="315" src=`${talks.youtubeEmbed}`
+                <iframe width="560" height="315" src=`${talk.youtubeEmbed}`
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
