@@ -1,0 +1,16 @@
+backend:
+  name: "local"
+  branch: main  # or your default branch
+
+media_folder: "static/photos"  # where uploaded files will go
+public_folder: "/photos"       # public URL path to access media
+
+collections:
+  - name: "talks"
+    label: "Talks"
+    folder: "src/content/talks"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+#      - { label: "Body", name: "body", widget: "markdown" }
