@@ -73,17 +73,11 @@ const { talk, past = false } = Astro.props;
     <!-- Embedded video for past talks -->
     {past && talk.youtubeEmbed && (
             <div class="mt-4 aspect-video rounded-lg overflow-hidden shadow">
-                <iframe
-                        width="560"
-                        height="315"
-                        src=`${talk.youtubeEmbed}`
-                        srcdoc=`<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}</style><a href=${talk.youtubeEmbed}><img src=${talk.youtubeEmbed} alt='${talk.title} - Video'><span>▶</span></a>`
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        title=`${talk.title}`
-                ></iframe>
-
-
+                <iframe width="560" height="315" src=`${talks.youtubeEmbed}`
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
     )}
 </article>
