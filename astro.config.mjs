@@ -1,5 +1,8 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://yourusername.github.io',
+  base: '/scheduling-seminar',
+  integrations: [tailwind()], // ← Use integrations, not vite.plugins
+});

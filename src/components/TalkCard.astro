@@ -1,0 +1,84 @@
+---
+const { talk, past = false } = Astro.props;
+---
+
+<article class="bg-white p-6 rounded-xl shadow hover:shadow-md transition">
+    <h3 class="text-xl font-semibold text-blue-700 mb-2">{talk.title}</h3>
+
+    <!-- Abstract toggle -->
+    <details class="mb-3">
+        <summary class="cursor-pointer text-blue-600 hover:underline">Abstract</summary>
+        <p class="text-gray-700 mt-2">{talk.abstract}</p>
+    </details>
+
+    <!-- PDF/Video links -->
+    <div class="flex flex-wrap gap-3 mb-4">
+        {talk.pdf && (
+                <a href={`${import.meta.env.BASE_URL}/presentations/${talk.pdf}`} class="text-sm text-white bg-blue-600 px-3 py-1 rounded hover:bg-blue-700" download>
+                    Download PDF
+                </a>
+        )}
+        {talk.video && (
+                <a href={talk.video} class="text-sm text-white bg-blue-600 px-3 py-1 rounded hover:bg-blue-700" download>
+                    Download Video
+                </a>
+        )}
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Presenter -->
+        <div class="flex flex-col items-center text-center">
+            <a href={talk.presenter.link}>
+                <img
+                        src={`${import.meta.env.BASE_URL}/photos/${talk.presenter.photo}`}
+                        alt="Presenter photo"
+                        class="w-24 h-24 object-cover rounded-full shadow mb-2"
+                        loading="lazy"
+                />
+            </a>
+            <div>
+                <p class="font-medium">{talk.presenter.name}</p>
+                <p class="text-sm text-gray-600">{talk.presenter.affiliation}</p>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1">
+            {!past && (
+                    <div class="grid grid-cols-2 sm:grid-cols-4 text-sm gap-y-1 mb-3">
+                        <div class="font-semibold text-gray-800">UTC</div>
+                        <div>{talk.times.utc}</div>
+                        <div class="font-semibold text-gray-800">Prague</div>
+                        <div>{talk.times.prague}</div>
+                        <div class="font-semibold text-gray-800">New York</div>
+                        <div>{talk.times.newYork}</div>
+                        <div class="font-semibold text-gray-800">Shanghai</div>
+                        <div>{talk.times.shanghai}</div>
+                    </div>
+            )}
+
+            {talk.keywords && (
+                    <p class="text-sm text-gray-700 mb-3">
+                        <b>Keywords:</b> {talk.keywords.join(', ')}
+                    </p>
+            )}
+
+            <p class="text-sm text-gray-700">
+                <b>Invited by:</b> <a href={talk.invitedBy.link} class="text-blue-600 hover:underline">{talk.invitedBy.name}</a>
+                {' '}({talk.invitedBy.affiliation})
+            </p>
+        </div>
+    </div>
+
+    <!-- Embedded video for past talks -->
+    {past && talk.youtubeEmbed && (
+            <div class="mt-4 aspect-video rounded-lg overflow-hidden shadow">
+                <iframe
+                        src={`https://www.youtube.com/embed/${talk.youtubeEmbed}`}
+                        class="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                ></iframe>
+            </div>
+    )}
+</article>
