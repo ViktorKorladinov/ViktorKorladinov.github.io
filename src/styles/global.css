@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    font-size: 18px; /* Default is 16px — this makes everything ~12.5% larger */
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 20px; /* ~25% larger on medium+ screens */
+    }
+}

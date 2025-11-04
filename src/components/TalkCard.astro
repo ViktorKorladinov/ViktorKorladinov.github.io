@@ -27,11 +27,11 @@ const { talk, past = false } = Astro.props;
 
     <div class="flex flex-col md:flex-row gap-6">
         <!-- Presenter -->
-        <div class="flex flex-col items-center text-center">
+        <div class="flex flex-col items-center text-center w-32">
             <a href={talk.presenter.link}>
                 <img
                         src={`/photos/${talk.presenter.photo}`}
-                        alt="Presenter photo"
+                        alt="Presenter"
                         class="w-24 h-24 object-cover rounded-full shadow mb-2"
                         loading="lazy"
                 />
@@ -45,15 +45,18 @@ const { talk, past = false } = Astro.props;
         <!-- Info -->
         <div class="flex-1">
             {!past && (
-                    <div class="grid grid-cols-2 sm:grid-cols-4 text-sm gap-y-1 mb-3">
-                        <div class="font-semibold text-gray-800">UTC</div>
-                        <div>{talk.times.utc}</div>
-                        <div class="font-semibold text-gray-800">Prague</div>
-                        <div>{talk.times.prague}</div>
-                        <div class="font-semibold text-gray-800">New York</div>
-                        <div>{talk.times.newYork}</div>
-                        <div class="font-semibold text-gray-800">Shanghai</div>
-                        <div>{talk.times.shanghai}</div>
+                    <div class="grid">
+                        {[
+                            { city: 'UTC', time: talk.times.utc },
+                            { city: 'Prague', time: talk.times.prague },
+                            { city: 'New York', time: talk.times.newYork },
+                            { city: 'Shanghai', time: talk.times.shanghai },
+                        ].map(({ city, time }) => (
+                                <div class="grid grid-cols-[auto_1fr] text-sm">
+                                    <div class="font-semibold text-gray-800">{city}</div>
+                                    <div class="truncate text-gray-700">{time}</div>
+                                </div>
+                        ))}
                     </div>
             )}
 
@@ -64,18 +67,21 @@ const { talk, past = false } = Astro.props;
             )}
 
             <p class="text-sm text-gray-700">
-                <b>Invited by:</b> <a href={talk.invitedBy.link} class="text-blue-600 hover:underline">{talk.invitedBy.name}</a>
-                {' '}({talk.invitedBy.affiliation})
+                <b>Invited by:</b>{' '}
+                <a href={talk.invitedBy.link} class="text-blue-600 hover:underline">
+                    {talk.invitedBy.name}
+                </a>{' '}
+                ({talk.invitedBy.affiliation})
             </p>
         </div>
     </div>
 
     <!-- Embedded video for past talks -->
     {past && talk.youtubeEmbed && (
-            <div class="mt-4 aspect-video rounded-lg overflow-hidden shadow">
-                <iframe width="560" height="315" src=`${talk.youtubeEmbed}`
+            <div class="mt-4 relative aspect-video rounded-lg overflow-hidden shadow">
+                <iframe src=`${talk.youtubeEmbed}`
                         title="YouTube video player"
-                        frameborder="0"
+                        class="absolute inset-0 w-full h-full"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
