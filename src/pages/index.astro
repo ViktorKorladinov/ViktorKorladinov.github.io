@@ -4,6 +4,8 @@ import TalkCard from '../components/TalkCard.astro';
 import {getTalks} from '../utils/processTalks'
 import {Image} from 'astro:assets';
 import gantt from "../assets/gantt_upscaled.png"
+import CoChairs from "../components/CoChairs.astro";
+import CommitteeGrid from "../components/CommitteeGrid.astro";
 
 const {pastTalks, upcomingTalks} = await getTalks()
 console.log(pastTalks)
@@ -179,6 +181,9 @@ console.log(pastTalks)
                 )}
             </div>
         </div>
+
+        <CoChairs/>
+        <CommitteeGrid/>
 
         <div class="grid lg:grid-cols-2 gap-8">
             <!-- Calendar Section -->

@@ -1,0 +1,90 @@
+---
+// src/components/PcCoChairs.astro
+import zdenek from '../assets/committee/Zdenek.jpg'
+// Define the PC Co-Chairs data structure
+const pcChairs = [
+    {
+        name: "Zdeněk Hanzálek",
+        affiliation: "CTU in Prague",
+        continent: "Europe",
+        photo: "Zdenek.jpg",
+        link: "https://rtime.ciirc.cvut.cz/~hanzalek/",
+    },
+    {
+        name: "Michael Pinedo",
+        affiliation: "New York Uni",
+        continent: "North America",
+        photo: "mpinedo.jpg",
+        link: "https://www.stern.nyu.edu/faculty/bio/michael-pinedo",
+    },
+    {
+        name: "Guohua Wan",
+        affiliation: "Shanghai Jiao Tong",
+        continent: "Asia",
+        photo: "guohua_wan.jpg",
+        link: "http://www.acem.sjtu.edu.cn/en/faculty/wanguohua.html",
+    },
+];
+
+// Helper to generate initials if photo is missing
+const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+};
+
+// Continent colors mapping for background/border highlight
+const continentColors = {
+    'Europe': {
+        bgColor: 'bg-yellow-50', // light yellow background
+        borderColor: 'border-yellow-400',
+    },
+    'North America': {
+        bgColor: 'bg-orange-50', // light orange background
+        borderColor: 'border-orange-400',
+    },
+    'Asia': {
+        bgColor: 'bg-blue-50', // light blue background
+        borderColor: 'border-blue-400',
+    },
+};
+---
+
+<section class="py-12" id="PC_co-chairs">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Program Committee Co-Chairs</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+        {pcChairs.map((chair) => {
+            const colors = continentColors[chair.continent] || {
+                bgColor: 'bg-gray-50',
+                borderColor: 'border-gray-300',
+            };
+
+            return (
+                    <a href={chair.link} target="_blank"
+                       class={`block rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 ${colors.bgColor} border-b-4 ${colors.borderColor}`}>
+                        <div class="p-6 flex flex-col items-center text-center">
+                            {/* Photo/Initials */}
+                            {chair.photo ? (
+                                    <img
+                                            src={`/photos/${chair.photo}`}
+                                            alt={chair.name}
+                                            class="w-40 h-40 object-cover rounded-xl shadow-md border-4 border-white mb-4"
+                                            loading="lazy"
+                                    />
+                            ) : (
+                                    <div class="w-40 h-40 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-4xl shadow-md mb-4">
+                                        {getInitials(chair.name)}
+                                    </div>
+                            )}
+
+                            {/* Name and Affiliation */}
+                            <h3 class="text-lg font-semibold text-gray-800 leading-snug">
+                                {chair.name}
+                            </h3>
+                            <p class="text-sm text-gray-600">
+                                {chair.affiliation}
+                            </p>
+                        </div>
+                    </a>
+            );
+        })}
+    </div>
+</section>
