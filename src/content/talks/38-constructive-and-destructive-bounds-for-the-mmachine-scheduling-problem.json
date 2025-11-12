@@ -6,7 +6,8 @@
     "name": "Jacques Carlier",
     "affiliation": "Sorbonne Uni",
     "photo": "JacquesCarlier.jpg",
-    "link": "https://scholar.google.fr/citations?user=VrUXV3IAAAAJ&hl=en"
+    "link": "https://scholar.google.fr/citations?user=VrUXV3IAAAAJ&hl=en",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Christian Artigues",

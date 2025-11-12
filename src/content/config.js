@@ -11,6 +11,7 @@ const talks = defineCollection({
             affiliation: z.string(),
             photo: z.string(),
             link: z.string(),
+            continent: z.string(),
         }),
         invitedBy: z.object({
             name: z.string(),

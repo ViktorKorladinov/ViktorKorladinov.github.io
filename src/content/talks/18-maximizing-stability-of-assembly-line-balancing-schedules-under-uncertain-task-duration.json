@@ -6,7 +6,8 @@
     "name": "André Rossi",
     "affiliation": "Universite PSL",
     "photo": "andre_rossi.jpg",
-    "link": "https://www.lamsade.dauphine.fr/~arossi/"
+    "link": "https://www.lamsade.dauphine.fr/~arossi/",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",

@@ -6,7 +6,8 @@
     "name": "Dirk Briskorn",
     "affiliation": "Uni of Wuppertal",
     "photo": "Dirk_Briskorn.jpg",
-    "link": "http://www.briskorn.info/"
+    "link": "http://www.briskorn.info/",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",

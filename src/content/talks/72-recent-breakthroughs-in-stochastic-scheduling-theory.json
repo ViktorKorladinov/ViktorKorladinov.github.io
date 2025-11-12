@@ -6,7 +6,8 @@
     "name": "Mor Harchol-Balter",
     "affiliation": "CMU",
     "photo": "harchol_balter.jpg",
-    "link": "http://www.cs.cmu.edu/~harchol/"
+    "link": "http://www.cs.cmu.edu/~harchol/",
+    "continent": "North America"
   },
   "invitedBy": {
     "name": "Michael Pinedo",

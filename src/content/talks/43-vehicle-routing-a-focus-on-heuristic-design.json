@@ -6,7 +6,8 @@
     "name": "Greet Vanden Berghe",
     "affiliation": "KU Leuven",
     "photo": "Greet_Vanden_Berghe_2.jpg",
-    "link": "https://www.kuleuven.be/wieiswie/nl/person/00053376"
+    "link": "https://www.kuleuven.be/wieiswie/nl/person/00053376",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",

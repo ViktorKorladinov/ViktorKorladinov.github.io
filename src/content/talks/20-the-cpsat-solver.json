@@ -6,7 +6,8 @@
     "name": "Laurent Perron",
     "affiliation": "Google France",
     "photo": "Laurent_Perron.jpg",
-    "link": "https://developers.google.com/optimization"
+    "link": "https://developers.google.com/optimization",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",

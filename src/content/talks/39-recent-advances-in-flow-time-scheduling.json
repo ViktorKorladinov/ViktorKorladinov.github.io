@@ -6,7 +6,8 @@
     "name": "Lars Rohwedder",
     "affiliation": "Maastricht University",
     "photo": "Lars_Rohwedder.jpg",
-    "link": "https://larsrohwedder.com/"
+    "link": "https://larsrohwedder.com/",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Jan Karel Lenstra",

@@ -6,7 +6,8 @@
     "name": "Philippe Laborie",
     "affiliation": "Hexaly",
     "photo": "phillipe_laborie.jpg",
-    "link": "https://www.hexaly.com/"
+    "link": "https://www.hexaly.com/",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",

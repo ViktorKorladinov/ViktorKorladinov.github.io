@@ -6,7 +6,8 @@
     "name": "Dries Goossens",
     "affiliation": "Ghent University",
     "photo": "Dries%20Goossens.jpg",
-    "link": "https://biblio.ugent.be/person/802001574062"
+    "link": "https://biblio.ugent.be/person/802001574062",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Chris Potts",

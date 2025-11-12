@@ -6,7 +6,8 @@
     "name": "Sigrid Knust",
     "affiliation": "Uni of Osnabrück",
     "photo": "sknust.jpg",
-    "link": "https://www.informatik.uni-osnabrueck.de/knust/"
+    "link": "https://www.informatik.uni-osnabrueck.de/knust/",
+    "continent": "Europe"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",

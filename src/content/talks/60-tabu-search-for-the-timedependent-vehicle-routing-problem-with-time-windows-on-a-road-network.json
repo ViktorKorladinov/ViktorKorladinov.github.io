@@ -6,7 +6,8 @@
     "name": "Michel Gendreau",
     "affiliation": "Polytech Montréal",
     "photo": "michel_gendreau.jpg",
-    "link": "https://www.polymtl.ca/expertises/en/gendreau-michel"
+    "link": "https://www.polymtl.ca/expertises/en/gendreau-michel",
+    "continent": "North America"
   },
   "invitedBy": {
     "name": "Zdeněk Hanzálek",
