@@ -2,37 +2,41 @@
 import committee from '../data/committee';
 ---
 
-<div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8" id="Program_committee">
-    <div class="grid gap-x-6 gap-y-8
+
+<section class="py-12" id="Program_committee">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Program Committee </h2>
+    <div class="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8" id="Program_committee">
+        <div class="grid gap-x-6 gap-y-8
     grid-cols-2
     sm:grid-cols-3
     lg:grid-cols-4
     xl:grid-cols-6">
-        {committee.map((member) => (
-                <a href={member.profile} target="_blank"
-                   class="block bg-white rounded-xl text-center p-4
+            {committee.map((member) => (
+                    <a href={member.profile} target="_blank"
+                       class="block bg-white rounded-xl text-center p-4
                           border border-gray-100 /* Subtle border instead of heavy shadow */
                           shadow-md hover:shadow-lg /* Very light, professional lift */
                           transition-all duration-300 transform hover:-translate-y-0.5">
 
-                    {/* Photo - Generous circular photo (w-28 h-28) */}
-                    <div class="w-28 h-28 mx-auto mb-3 rounded-full overflow-hidden
+                        {/* Photo - Generous circular photo (w-28 h-28) */}
+                        <div class="w-28 h-28 mx-auto mb-3 rounded-full overflow-hidden
                                 border-2 border-white shadow-inner /* Clean inner shadow */">
-                        {/* The photo is now the primary visual element, but not square-dominant */}
-                        <img src={member.photo} alt={`Photo of ${member.name}`} loading="lazy"
-                             class="object-cover w-full h-full">
-                    </div>
+                            {/* The photo is now the primary visual element, but not square-dominant */}
+                            <img src={member.photo} alt={`Photo of ${member.name}`} loading="lazy"
+                                 class="object-cover w-full h-full">
+                        </div>
 
-                    {/* Text Content - Focused and clear */}
-                    <div class="text-center">
-                        <h3 class="text-base font-semibold text-gray-800 leading-snug">
-                            {member.name}
-                        </h3>
-                        <p class="text-sm text-gray-500 mt-1">
-                            {member.university}
-                        </p>
-                    </div>
-                </a>
-        ))}
+                        {/* Text Content - Focused and clear */}
+                        <div class="text-center">
+                            <h3 class="text-base font-semibold text-gray-800 leading-snug">
+                                {member.name}
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">
+                                {member.university}
+                            </p>
+                        </div>
+                    </a>
+            ))}
+        </div>
     </div>
-</div>
+</section>
