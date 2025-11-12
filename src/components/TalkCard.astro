@@ -1,5 +1,5 @@
 ---
-const { talk, past = false, compact = false } = Astro.props;
+const {talk, past = false, compact = false} = Astro.props;
 
 // Generate initials from presenter name
 const getInitials = (name) => {
@@ -10,12 +10,14 @@ const getInitials = (name) => {
 const cardId = `talk-card-${talk.id}`;
 ---
 
-<article class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 snap-start shrink-0 ${past ? 'border-gray-400' : 'border-green-500'} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`} data-card-id={cardId}>
+<article
+        class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 snap-start shrink-0 ${past ? 'border-gray-400' : 'border-green-500'} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
+        data-card-id={cardId}>
     <div class={compact ? 'p-4' : 'p-6'}>
         {compact ? (
             <!-- Compact view: Just title and presenter in a row -->
                 <div class="compact-card-content">
-                    <div class="flex items-start gap-4">
+                    <div class="flex items-start gap-4" id="card-header">
                         <div class="flex items-start gap-3 flex-1 min-w-0">
                             {talk.presenter.photo ? (
                                     <img
@@ -30,23 +32,31 @@ const cardId = `talk-card-${talk.id}`;
                                     </div>
                             )}
                             <div class="flex-1 min-w-0">
-                                <h3 class="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem;">{talk.title}</h3>
+                                <h3 class="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-1"
+                                    style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem;">{talk.title}</h3>
                                 <p class="text-sm text-gray-600">{talk.presenter.name}, {talk.presenter.affiliation}</p>
                             </div>
                         </div>
                         {(talk.pdf || talk.video || talk.youtubeEmbed) && (
                                 <div class="flex gap-2 flex-shrink-0">
                                     {talk.youtubeEmbed && (
-                                            <a href={talk.youtubeEmbed} target="_blank" class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition-colors" onclick="event.stopPropagation();">
+                                            <a href={talk.youtubeEmbed} target="_blank"
+                                               class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition-colors"
+                                               onclick="event.stopPropagation();">
                                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                                 </svg>
                                             </a>
                                     )}
                                     {talk.pdf && (
-                                            <a href={`/presentations/${talk.pdf}`} download class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors" onclick="event.stopPropagation();">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                            <a href={`/presentations/${talk.pdf}`} download
+                                               class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors"
+                                               onclick="event.stopPropagation();">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                     viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                                 </svg>
                                             </a>
                                     )}
@@ -58,10 +68,13 @@ const cardId = `talk-card-${talk.id}`;
                     <div class="compact-expanded-content hidden mt-4 pt-4 border-t border-gray-200">
                         <!-- Abstract -->
                         <details class="mb-4 group">
-                            <summary class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
+                            <summary
+                                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
                                 <span class="text-sm">Abstract</span>
-                                <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none"
+                                     stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </summary>
                             <p class="text-gray-600 text-sm leading-relaxed mt-3 pl-4 border-l-2 border-blue-200">
@@ -101,15 +114,16 @@ const cardId = `talk-card-${talk.id}`;
 
                         {talk.youtubeEmbed && (
                                 <div class="mt-4 rounded-xl overflow-hidden shadow-lg">
-                                    <div class="relative aspect-video">
-                                        <iframe
-                                                src={talk.youtubeEmbed}
-                                                title="YouTube video player"
-                                                class="absolute inset-0 w-full h-full"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-                                                referrerpolicy="strict-origin-when-cross-origin"
-                                                allowfullscreen
-                                        ></iframe>
+                                    <div class="relative aspect-video youtube-placeholder" data-src={talk.youtubeEmbed}>
+                                        <button
+                                                class="absolute inset-0 flex items-center justify-center bg-black/40 text-white hover:bg-black/60 transition-colors"
+                                                title="Click to load video"
+                                        >
+                                            <svg class="w-16 h-16 text-white opacity-90" fill="currentColor"
+                                                 viewBox="0 0 24 24">
+                                                <path d="M8 5v14l11-7z"/>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                         )}
@@ -122,10 +136,13 @@ const cardId = `talk-card-${talk.id}`;
 
                     <!-- Abstract Toggle -->
                     <details class="mb-4 group">
-                        <summary class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
+                        <summary
+                                class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
                             <span class="text-sm">Abstract</span>
-                            <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none"
+                                 stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </summary>
                         <p class="text-gray-600 text-sm leading-relaxed mt-3 pl-4 border-l-2 border-blue-200">
@@ -137,18 +154,23 @@ const cardId = `talk-card-${talk.id}`;
                     {(talk.pdf || talk.video) && (
                             <div class="flex flex-wrap gap-2 mb-4">
                                 {talk.pdf && (
-                                        <a href={`/presentations/${talk.pdf}`} download class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm rounded-lg hover:shadow-lg transition-all">
+                                        <a href={`/presentations/${talk.pdf}`} download
+                                           class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm rounded-lg hover:shadow-lg transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                             </svg>
                                             PDF
                                         </a>
                                 )}
                                 {talk.video && (
-                                        <a href={talk.video} download class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm rounded-lg hover:shadow-lg transition-all">
+                                        <a href={talk.video} download
+                                           class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm rounded-lg hover:shadow-lg transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
                                             Video
                                         </a>
@@ -186,11 +208,11 @@ const cardId = `talk-card-${talk.id}`;
                             {!past && talk.times && (
                                     <div class="grid grid-cols-2 gap-2 mb-4">
                                         {[
-                                            { city: 'UTC', time: talk.times.utc, icon: '🌍' },
-                                            { city: 'Prague', time: talk.times.prague, icon: '🇨🇿' },
-                                            { city: 'New York', time: talk.times.newYork, icon: '🇺🇸' },
-                                            { city: 'Shanghai', time: talk.times.shanghai, icon: '🇨🇳' }
-                                        ].map(({ city, time, icon }) => (
+                                            {city: 'UTC', time: talk.times.utc, icon: '🌍'},
+                                            {city: 'Prague', time: talk.times.prague, icon: '🇨🇿'},
+                                            {city: 'New York', time: talk.times.newYork, icon: '🇺🇸'},
+                                            {city: 'Shanghai', time: talk.times.shanghai, icon: '🇨🇳'}
+                                        ].map(({city, time, icon}) => (
                                                 <div class="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-blue-50 to-slate-50 rounded-lg">
                                                     <span>{icon}</span>
                                                     <div class="flex-1 min-w-0">
@@ -254,24 +276,43 @@ const cardId = `talk-card-${talk.id}`;
     </div>
 </article>
 
-{compact && (
 <script define:vars={{ cardId }}>
-    // Add click handler to expand compact cards
-    (function() {
+    (function () {
         const card = document.querySelector(`[data-card-id="${cardId}"]`);
-        const compactContent = card?.querySelector('.compact-card-content');
-        const expandedContent = card?.querySelector('.compact-expanded-content');
+        if (!card) return;
 
-        if (card && compactContent && expandedContent) {
-            compactContent.addEventListener('click', function(e) {
-                // Don't expand if clicking on links
-                if (e.target.closest('a')) return;
+        const expandedContent = card.querySelector('.compact-expanded-content');
+        const header = card.querySelector('#card-header');
 
+        if (header && expandedContent) {
+            header.addEventListener('click', (e) => {
+                // Ignore clicks on links or buttons
+                if (e.target.closest('a, button, summary')) return;
                 expandedContent.classList.toggle('hidden');
                 card.classList.toggle('ring-2');
                 card.classList.toggle('ring-blue-500');
             });
         }
+
+        // Lazy YouTube embed loader
+        card.addEventListener('click', (e) => {
+            const placeholder = e.target.closest('.youtube-placeholder');
+            if (!placeholder || placeholder.querySelector('iframe')) return;
+
+            const src = placeholder.getAttribute('data-src');
+            const iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.title = 'YouTube video player';
+            iframe.className = 'absolute inset-0 w-full h-full';
+            iframe.allow =
+                'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;';
+            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+            iframe.allowFullscreen = true;
+
+            placeholder.innerHTML = '';
+            placeholder.appendChild(iframe);
+        });
     })();
 </script>
-    )}
+
+
