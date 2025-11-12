@@ -157,7 +157,7 @@ console.log(pastTalks)
 
             <!-- Past Talks -->
             <div>
-                <div class="flex items-center gap-3 mb-6">
+                <div class="flex items-center gap-3">
                     <div class="w-1 h-8 bg-gradient-to-b from-gray-600 to-gray-400 rounded-full"></div>
                     <h2 class="text-3xl font-bold text-gray-800">Past Talks</h2>
                     <div class="px-3 py-1 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">{pastTalks.length}</div>
@@ -166,7 +166,7 @@ console.log(pastTalks)
                 {pastTalks.length > 0 && (
                         <>
                             <!-- Compact list of remaining talks in scrollable container -->
-                            <div class="mt-6 p-5 max-h-[800px] overflow-y-auto space-y-3 pr-2 snap-y
+                            <div class="mt-6 p-5 max-h-[840px] overflow-y-auto space-y-3 pr-2 snap-y
                             scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 scroll-pt-2">
                                 {pastTalks.map(talk => (
                                         <div class="snap-start"> <!-- Add this wrapper -->
@@ -174,7 +174,7 @@ console.log(pastTalks)
                                         </div>
                                 ))}
                             </div>
-                            <div class="mt-4 text-center text-sm text-gray-500"> Scroll for all {pastTalks.length}
+                            <div class="mt-2 text-center text-sm text-gray-500"> Scroll for all {pastTalks.length}
                                 talks
                             </div>
                         </>
