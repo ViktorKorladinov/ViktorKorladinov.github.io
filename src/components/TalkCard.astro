@@ -61,7 +61,7 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                                     <img
                                             src={`/photos/${talk.presenter.photo}`}
                                             alt={talk.presenter.name}
-                                            class="w-12 h-12 object-cover rounded-lg shadow flex-shrink-0 mt-1"
+                                            class="w-16 h-16 object-cover rounded-lg shadow flex-shrink-0 mt-1"
                                             loading="lazy"
                                     />
                             ) : (
@@ -216,13 +216,13 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                     )}
 
                     <div class="flex flex-col md:flex-row gap-6">
-                        <div class="flex md:flex-col items-center md:items-start gap-4 md:w-32">
+                        <div class="flex md:flex-col justify-center items-center gap-4 md:w-32">
                             {talk.presenter.photo ? (
                                     <a href={talk.presenter.link}>
                                         <img
                                                 src={`/photos/${talk.presenter.photo}`}
                                                 alt={talk.presenter.name}
-                                                class="w-20 h-20 object-cover rounded-xl shadow-lg"
+                                                class="w-24 h-24 object-cover rounded-xl shadow-lg"
                                                 loading="lazy"
                                         />
                                     </a>
@@ -327,8 +327,8 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                 // Ignore clicks on links or buttons
                 if (e.target.closest('a, button, summary')) return;
                 expandedContent.classList.toggle('hidden');
-                card.classList.toggle('ring-2');
-                card.classList.toggle('ring-blue-500');
+                // card.classList.toggle('ring-2');
+                // card.classList.toggle('ring-blue-500');
             });
         }
 

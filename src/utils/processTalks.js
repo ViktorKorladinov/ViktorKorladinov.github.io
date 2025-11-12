@@ -3,7 +3,7 @@ import {DateTime} from "luxon";
 
 async function getTalks() {
     const entries = await getCollection("talks");
-    const talks = entries.map(({data}) => {
+    let talks = entries.map(({data}) => {
         const datePrague = DateTime.fromISO(`${data.datePrague}T15:00:00`, {zone: "Europe/Prague"});
         const times = {
             utc: datePrague.setZone("UTC").toFormat("MMM dd, HH:mm ccc"),
@@ -19,7 +19,7 @@ async function getTalks() {
             date: datePrague.toUTC().toISO(),
         };
     });
-
+    talks = talks.toSorted((a, b) => b.id - a.id).toReversed()
     const upcomingTalks = talks.filter(t => t.status === 'upcoming');
     const pastTalks = talks.filter(t => t.status === 'past');
     return {upcomingTalks, pastTalks};
