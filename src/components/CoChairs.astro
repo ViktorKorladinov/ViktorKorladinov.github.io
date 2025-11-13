@@ -1,6 +1,10 @@
 ---
-// src/components/PcCoChairs.astro
-import zdenek from '../assets/committee/Zdenek.jpg'
+import {Image} from "astro:assets";
+import zdenek from '../assets/photos/Zdenek.jpg'
+import pinedo from '../assets/photos/mpinedo.jpg'
+import wan from '../assets/photos/guohua_wan.jpg'
+
+const photos = [zdenek, pinedo, wan]
 // Define the PC Co-Chairs data structure
 const pcChairs = [
     {
@@ -51,7 +55,7 @@ const continentColors = {
 <section class="py-12" id="PC_co-chairs">
     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Program Committee Co-Chairs</h2>
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
-        {pcChairs.map((chair) => {
+        {pcChairs.map( (chair, idx) => {
             const colors = continentColors[chair.continent] || {
                 bgColor: 'bg-gray-50',
                 borderColor: 'border-gray-300',
@@ -63,8 +67,8 @@ const continentColors = {
                         <div class="p-6 flex flex-col items-center text-center">
                             {/* Photo/Initials */}
                             {chair.photo ? (
-                                    <img
-                                            src={`/photos/${chair.photo}`}
+                                    <Image
+                                            src={photos[idx]}
                                             alt={chair.name}
                                             class="w-40 h-40 object-cover rounded-xl shadow-md border-4 border-white mb-4"
                                             loading="lazy"

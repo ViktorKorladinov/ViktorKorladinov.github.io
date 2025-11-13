@@ -1,4 +1,5 @@
 ---
+import {Image} from "astro:assets";
 const {talk, past = false, compact = false} = Astro.props;
 
 // 1. Define Continent Colors and SVGs
@@ -36,17 +37,19 @@ const getContinentStyle = (continentName) => {
 // Get the styles for the talk's continent
 const continentStyles = getContinentStyle(talk.presenter.continent);
 
-// Generate initials from presenter name
+// Generate initials from the presenter's name
 const getInitials = (name) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
 };
 
-// Generate unique ID for each card
+// Generate a unique ID for each card
 const cardId = `talk-card-${talk.id}`;
 
 // Determine the final border color class
 const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
 
+const images = import.meta.glob('/src/assets/photos/*.{jpeg,jpg,png,gif}')
+const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
 ---
 
 <article
@@ -55,46 +58,68 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
     <div class={compact ? 'p-4' : 'p-6'}>
         {compact ? (
                 <div class="compact-card-content">
-                    <div class="flex items-start gap-4" id="card-header">
-                        <div class="flex items-start gap-3 flex-1 min-w-0">
+                    <div class="flex flex-col sm:flex-row items-center gap-4" id="card-header">
+                        <div class="flex flex-col sm:flex-row items-start gap-3 flex-1 min-w-0">
                             {talk.presenter.photo ? (
-                                    <img
-                                            src={`/photos/${talk.presenter.photo}`}
+                                    <Image
+                                            src={image}
                                             alt={talk.presenter.name}
-                                            class="w-16 h-16 object-cover rounded-lg shadow flex-shrink-0 mt-1"
+                                            class="w-16 h-16 sm:w-14 sm:h-14 object-cover rounded-lg shadow flex-shrink-0 mt-1 mx-auto sm:mx-0"
                                             loading="lazy"
                                     />
                             ) : (
-                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow flex-shrink-0 mt-1">
+                                    <div class="w-12 h-12 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow flex-shrink-0 mt-1 mx-auto sm:mx-0">
                                         {getInitials(talk.presenter.name)}
                                     </div>
                             )}
-                            <div class="flex-1 min-w-0">
-                                <h3 class="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-1"
-                                    style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem;">{talk.title}</h3>
-                                <p class="text-sm text-gray-600">{talk.presenter.name}, {talk.presenter.affiliation}</p>
+
+                            <div class="flex-1 min-w-0 break-words text-center sm:text-left">
+                                <h3
+                                        class="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-1 break-words"
+                                        style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem;"
+                                >
+                                    {talk.title}
+                                </h3>
+                                <p class="text-sm text-gray-600 break-words">
+                                    {talk.presenter.name}, {talk.presenter.affiliation}
+                                </p>
                             </div>
                         </div>
+
+                        <!-- Buttons: visible only on desktop -->
                         {(talk.pdf || talk.video || talk.youtubeEmbed) && (
-                                <div class="flex gap-2 flex-shrink-0">
+                                <div class="hidden sm:flex gap-2 flex-shrink-0">
                                     {talk.youtubeEmbed && (
-                                            <a href={talk.youtubeEmbed} target="_blank"
-                                               class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition-colors"
-                                               onclick="event.stopPropagation();">
+                                            <a
+                                                    href={talk.youtubeEmbed}
+                                                    target="_blank"
+                                                    class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition-colors"
+                                                    onclick="event.stopPropagation();"
+                                            >
                                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                                 </svg>
                                             </a>
                                     )}
                                     {talk.pdf && (
-                                            <a href={`/presentations/${talk.pdf}`} download
-                                               class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors"
-                                               onclick="event.stopPropagation();">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                     viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          stroke-width="2"
-                                                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                            <a
+                                                    href={`/presentations/${talk.pdf}`}
+                                                    download
+                                                    class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors"
+                                                    onclick="event.stopPropagation();"
+                                            >
+                                                <svg
+                                                        class="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                                    ></path>
                                                 </svg>
                                             </a>
                                     )}
@@ -102,20 +127,72 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                         )}
                     </div>
 
+                    <!-- Expanded content -->
                     <div class="compact-expanded-content hidden mt-4 pt-4 border-t border-gray-200">
-                        <div class={`flex items-center gap-3 p-3 mb-4 rounded-lg ${continentStyles.bgColorClass} ${continentStyles.textColorClass}`}>
+                        <!-- Show buttons on mobile only here -->
+                        {(talk.pdf || talk.video || talk.youtubeEmbed) && (
+                                <div class="flex sm:hidden gap-2 mb-3">
+                                    {talk.youtubeEmbed && (
+                                            <a
+                                                    href={talk.youtubeEmbed}
+                                                    target="_blank"
+                                                    class="w-8 h-8 bg-red-100 text-red-600 rounded-lg flex items-center justify-center hover:bg-red-200 transition-colors"
+                                                    onclick="event.stopPropagation();"
+                                            >
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                    )}
+                                    {talk.pdf && (
+                                            <a
+                                                    href={`/presentations/${talk.pdf}`}
+                                                    download
+                                                    class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors"
+                                                    onclick="event.stopPropagation();"
+                                            >
+                                                <svg
+                                                        class="w-4 h-4"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                                                    ></path>
+                                                </svg>
+                                            </a>
+                                    )}
+                                </div>
+                        )}
+
+                        <div
+                                class={`flex items-center gap-3 p-3 mb-4 rounded-lg ${continentStyles.bgColorClass} ${continentStyles.textColorClass}`}
+                        >
                             <div dangerouslySetInnerHTML={{ __html: continentStyles.svg }}></div>
                             <span class="text-sm font-semibold">Continent: {talk.presenter.continent || 'Not specified'}</span>
                         </div>
 
                         <details class="mb-4 group">
                             <summary
-                                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
+                                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none"
+                            >
                                 <span class="text-sm">Abstract</span>
-                                <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none"
-                                     stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M19 9l-7 7-7-7"></path>
+                                <svg
+                                        class="w-4 h-4 transition-transform group-open:rotate-180"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                >
+                                    <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                    ></path>
                                 </svg>
                             </summary>
                             <p class="text-gray-600 text-sm leading-relaxed mt-3 pl-4 border-l-2 border-blue-200">
@@ -127,20 +204,17 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     {talk.keywords.slice(0, 4).map((keyword) => (
                                             <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                                    {keyword}
-                                </span>
+            {keyword}
+          </span>
                                     ))}
                                     {talk.keywords.length > 4 && (
                                             <span
                                                     class="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full cursor-help"
                                                     title={talk.keywords.slice(4).join(', ')}
                                             >
-                                    +{talk.keywords.length - 4} more
-                                </span>
+            +{talk.keywords.length - 4} more
+          </span>
                                     )}
-                                    <span class="hidden">
-                                {talk.keywords.join(', ')}
-                            </span>
                                 </div>
                         )}
 
@@ -159,8 +233,7 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                                                 class="absolute inset-0 flex items-center justify-center bg-black/40 text-white hover:bg-black/60 transition-colors"
                                                 title="Click to load video"
                                         >
-                                            <svg class="w-16 h-16 text-white opacity-90" fill="currentColor"
-                                                 viewBox="0 0 24 24">
+                                            <svg class="w-16 h-16 text-white opacity-90" fill="currentColor" viewBox="0 0 24 24">
                                                 <path d="M8 5v14l11-7z"/>
                                             </svg>
                                         </button>
@@ -219,8 +292,8 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
                         <div class="flex md:flex-col justify-center items-center gap-4 md:w-32">
                             {talk.presenter.photo ? (
                                     <a href={talk.presenter.link}>
-                                        <img
-                                                src={`/photos/${talk.presenter.photo}`}
+                                        <Image
+                                                src={image}
                                                 alt={talk.presenter.name}
                                                 class="w-24 h-24 object-cover rounded-xl shadow-lg"
                                                 loading="lazy"
@@ -241,7 +314,7 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
 
                         <div class="flex-1">
                             <div class={`flex items-center gap-3 p-3 mb-4 rounded-lg ${continentStyles.bgColorClass} ${continentStyles.textColorClass}`}>
-                                <div dangerouslySetInnerHTML={{ __html: continentStyles.svg }}></div>
+                                <div dangerouslySetInnerHTML={{__html: continentStyles.svg}}></div>
                                 <span class="text-base font-semibold">Continent: {talk.presenter.continent || 'Not specified'}</span>
                             </div>
 
@@ -314,7 +387,7 @@ const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
     </div>
 </article>
 
-<script define:vars={{ cardId }}>
+<script define:vars={{cardId}}>
     (function () {
         const card = document.querySelector(`[data-card-id="${cardId}"]`);
         if (!card) return;
