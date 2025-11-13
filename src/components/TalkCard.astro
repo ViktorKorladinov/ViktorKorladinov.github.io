@@ -46,14 +46,19 @@ const getInitials = (name) => {
 const cardId = `talk-card-${talk.id}`;
 
 // Determine the final border color class
-const finalBorderClass = past ? continentStyles.colorClass : 'border-green-500';
+const borderMap = {
+    europe: 'border-yellow-400',
+    asia: 'border-blue-400',
+    america: 'border-orange-400',
+};
+const finalBorderClass = borderMap[talk.presenter.continent.toLowerCase()] || 'border-gray-300';
 
 const images = import.meta.glob('/src/assets/photos/*.{jpeg,jpg,png,gif}')
 const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
 ---
 
-<article
-        class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 snap-start shrink-0 ${finalBorderClass} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
+<article class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 
+                    snap-start shrink-0 ${finalBorderClass} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
         data-card-id={cardId}>
     <div class={compact ? 'p-4' : 'p-6'}>
         {compact ? (
@@ -168,13 +173,6 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                     )}
                                 </div>
                         )}
-
-                        <div
-                                class={`flex items-center gap-3 p-3 mb-4 rounded-lg ${continentStyles.bgColorClass} ${continentStyles.textColorClass}`}
-                        >
-                            <div dangerouslySetInnerHTML={{ __html: continentStyles.svg }}></div>
-                            <span class="text-sm font-semibold">Continent: {talk.presenter.continent || 'Not specified'}</span>
-                        </div>
 
                         <details class="mb-4 group">
                             <summary
@@ -313,13 +311,8 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                         </div>
 
                         <div class="flex-1">
-                            <div class={`flex items-center gap-3 p-3 mb-4 rounded-lg ${continentStyles.bgColorClass} ${continentStyles.textColorClass}`}>
-                                <div dangerouslySetInnerHTML={{__html: continentStyles.svg}}></div>
-                                <span class="text-base font-semibold">Continent: {talk.presenter.continent || 'Not specified'}</span>
-                            </div>
-
                             {!past && talk.times && (
-                                    <div class="grid grid-cols-2 gap-2 mb-4">
+                                    <div class="grid sm:grid-cols-2 gap-2 mb-4">
                                         {[
                                             {city: 'UTC', time: talk.times.utc, icon: '🌍'},
                                             {city: 'Prague', time: talk.times.prague, icon: '🇨🇿'},
