@@ -59,7 +59,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
 
 <article class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 
                     snap-start shrink-0 ${finalBorderClass} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
-        data-card-id={cardId}>
+         data-card-id={cardId}>
     <div class={compact ? 'p-4' : 'p-6'}>
         {compact ? (
                 <div class="compact-card-content">
@@ -231,7 +231,8 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                                 class="absolute inset-0 flex items-center justify-center bg-black/40 text-white hover:bg-black/60 transition-colors"
                                                 title="Click to load video"
                                         >
-                                            <svg class="w-16 h-16 text-white opacity-90" fill="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-16 h-16 text-white opacity-90" fill="currentColor"
+                                                 viewBox="0 0 24 24">
                                                 <path d="M8 5v14l11-7z"/>
                                             </svg>
                                         </button>

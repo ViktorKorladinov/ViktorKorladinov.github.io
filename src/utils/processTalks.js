@@ -24,11 +24,11 @@ async function getTalks() {
       date: datePrague.toUTC().toISO(),
     };
   });
-  talks = talks.sort((a, b) => {
+  talks = talks.toSorted((a, b) => {
     const dateA = new Date(a.datePrague);
     const dateB = new Date(b.datePrague);
-    return dateB.getTime() - dateA.getTime(); // most recent first
-  });
+    return -a.id + b.id; // most recent first
+  }).toReversed();
   const upcomingTalks = talks.filter(t => t.status === 'upcoming');
   const pastTalks = talks.filter(t => t.status === 'past');
   return {upcomingTalks, pastTalks};
