@@ -1,70 +1,59 @@
 ---
 import {Image} from "astro:assets";
+
 const {talk, past = false, compact = false} = Astro.props;
 
-// 1. Define Continent Colors and SVGs
+// Continent styling configuration
 const continentMap = {
     'Europe': {
-        colorClass: 'border-yellow-500', // Yellow
-        bgColorClass: 'bg-yellow-100',
+        colorClass: 'border-yellow-500',
+        bgColorClass: 'bg-yellow-400',
         textColorClass: 'text-yellow-700',
         svg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0v-2.5a2.5 2.5 0 00-2.5-2.5H12a2 2 0 01-2-2v-.935m-1 7.279L8.9 15H1.458C.283 14.59.083 13.918 0 13c.083-.918.283-1.59.458-2.008L8.9 9.721v1.516l-3.35 1.705L8.9 15v1.516L5.55 15.309M19.945 15H17a2 2 0 00-2-2v-1a2 2 0 01-2-2 2 2 0 10-4 0V9.055"/></svg>`
     },
-    'North America': {
-        colorClass: 'border-orange-500', // Orange
+    'America': {
+        colorClass: 'border-orange-500',
         bgColorClass: 'bg-orange-100',
         textColorClass: 'text-orange-700',
         svg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2.25a.75.75 0 00-.75.75v16.19l-4.72-2.126a.75.75 0 00-.91-.144l-2.427 1.214A.75.75 0 003 18.75V5.25a2.25 2.25 0 012.25-2.25h13.5a2.25 2.25 0 012.25 2.25v13.5a.75.75 0 00.91.144l-2.427-1.214a.75.75 0 00-.91.144L12.75 19.19V3a.75.75 0 00-.75-.75z"/></svg>`
     },
     'Asia': {
-        colorClass: 'border-blue-500', // Blue
+        colorClass: 'border-blue-500',
         bgColorClass: 'bg-blue-100',
         textColorClass: 'text-blue-700',
         svg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9h-3M9 21a9 9 0 01-9-9m0 0a9 9 0 019-9m-9 9h3m-5.46 6.75l-1.07-1.07a1 1 0 00-1.414 0L1 17.586m2.586-1.414l1.07 1.07a1 1 0 001.414 0L7 16.172m-2.172-1.414l1.07-1.07a1 1 0 001.414 0L8.83 14.05"/></svg>`
     },
 };
 
-// Function to get the correct continent styling
-const getContinentStyle = (continentName) => {
-    return continentMap[continentName] || {
-        colorClass: 'border-gray-400',
-        bgColorClass: 'bg-gray-100',
-        textColorClass: 'text-gray-600',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0V5.25a2.25 2.25 0 012.25-2.25h1.5M4 16h-.75a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75H4m2-7H4m-2 7h.75A.75.75 0 003 17.5v-1.5c0-.414-.336-.75-.75-.75H1M9 7h1.5a.75.75 0 00.75-.75V5.25a.75.75 0 00-.75-.75H9m0 7h.5m4.75-2.5H16"/></svg>` // Default globe
-    };
+const defaultContinent = {
+    colorClass: 'border-gray-400',
+    bgColorClass: 'bg-gray-100',
+    textColorClass: 'text-gray-600',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0V5.25a2.25 2.25 0 012.25-2.25h1.5M4 16h-.75a.75.75 0 00-.75.75v1.5c0 .414.336.75.75.75H4m2-7H4m-2 7h.75A.75.75 0 003 17.5v-1.5c0-.414-.336-.75-.75-.75H1M9 7h1.5a.75.75 0 00.75-.75V5.25a.75.75 0 00-.75-.75H9m0 7h.5m4.75-2.5H16"/></svg>`
 };
 
-// Get the styles for the talk's continent
-const continentStyles = getContinentStyle(talk.presenter.continent);
-
-// Generate initials from the presenter's name
-const getInitials = (name) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
-};
-
-// Generate a unique ID for each card
+const continentStyles = continentMap[talk.presenter.continent] || defaultContinent;
 const cardId = `talk-card-${talk.id}`;
 
-// Determine the final border color class
-const borderMap = {
-    europe: 'border-yellow-400',
-    asia: 'border-blue-400',
-    america: 'border-orange-400',
-};
-const finalBorderClass = borderMap[talk.presenter.continent.toLowerCase()] || 'border-gray-300';
+// Utilities
+const getInitials = (name) => name.split(' ').map(n => n[0]).join('').toUpperCase();
 
-const images = import.meta.glob('/src/assets/photos/*.{jpeg,jpg,png,gif}')
-const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
+const images = import.meta.glob('/src/assets/photos/*.{jpeg,jpg,png,gif}');
+const image = images[`/src/assets/photos/${talk.presenter.photo}`]();
+const hasActionButtons = talk.pdf || talk.video || talk.youtubeEmbed;
 ---
 
-<article class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 
-                    snap-start shrink-0 ${finalBorderClass} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
-        data-card-id={cardId}>
+<article
+        class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 snap-start shrink-0 ${continentStyles.colorClass} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
+        data-card-id={cardId}
+>
     <div class={compact ? 'p-4' : 'p-6'}>
         {compact ? (
                 <div class="compact-card-content">
+                    <!-- Compact Header -->
                     <div class="flex flex-col sm:flex-row items-center gap-4" id="card-header">
                         <div class="flex flex-col sm:flex-row items-start gap-3 flex-1 min-w-0">
+                            <!-- Avatar -->
                             {talk.presenter.photo ? (
                                     <Image
                                             src={image}
@@ -78,6 +67,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                     </div>
                             )}
 
+                            <!-- Title & Presenter Info -->
                             <div class="flex-1 min-w-0 break-words text-center sm:text-left">
                                 <h3
                                         class="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-1 break-words"
@@ -91,8 +81,8 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             </div>
                         </div>
 
-                        <!-- Buttons: visible only on desktop -->
-                        {(talk.pdf || talk.video || talk.youtubeEmbed) && (
+                        <!-- Desktop Action Buttons -->
+                        {hasActionButtons && (
                                 <div class="hidden sm:flex gap-2 flex-shrink-0">
                                     {talk.youtubeEmbed && (
                                             <a
@@ -113,18 +103,8 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                                     class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors"
                                                     onclick="event.stopPropagation();"
                                             >
-                                                <svg
-                                                        class="w-4 h-4"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                                                    ></path>
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                                 </svg>
                                             </a>
                                     )}
@@ -132,10 +112,10 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                         )}
                     </div>
 
-                    <!-- Expanded content -->
+                    <!-- Expandable Content -->
                     <div class="compact-expanded-content hidden mt-4 pt-4 border-t border-gray-200">
-                        <!-- Show buttons on mobile only here -->
-                        {(talk.pdf || talk.video || talk.youtubeEmbed) && (
+                        <!-- Mobile Action Buttons -->
+                        {hasActionButtons && (
                                 <div class="flex sm:hidden gap-2 mb-3">
                                     {talk.youtubeEmbed && (
                                             <a
@@ -156,41 +136,20 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                                     class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center hover:bg-blue-200 transition-colors"
                                                     onclick="event.stopPropagation();"
                                             >
-                                                <svg
-                                                        class="w-4 h-4"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                                                    ></path>
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                                 </svg>
                                             </a>
                                     )}
                                 </div>
                         )}
 
+                        <!-- Abstract -->
                         <details class="mb-4 group">
-                            <summary
-                                    class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none"
-                            >
+                            <summary class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
                                 <span class="text-sm">Abstract</span>
-                                <svg
-                                        class="w-4 h-4 transition-transform group-open:rotate-180"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                >
-                                    <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 9l-7 7-7-7"
-                                    ></path>
+                                <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </summary>
                             <p class="text-gray-600 text-sm leading-relaxed mt-3 pl-4 border-l-2 border-blue-200">
@@ -198,24 +157,26 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             </p>
                         </details>
 
+                        <!-- Keywords -->
                         {talk.keywords && talk.keywords.length > 0 && (
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     {talk.keywords.slice(0, 4).map((keyword) => (
                                             <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-            {keyword}
-          </span>
+                                    {keyword}
+                                </span>
                                     ))}
                                     {talk.keywords.length > 4 && (
                                             <span
                                                     class="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full cursor-help"
                                                     title={talk.keywords.slice(4).join(', ')}
                                             >
-            +{talk.keywords.length - 4} more
-          </span>
+                                    +{talk.keywords.length - 4} more
+                                </span>
                                     )}
                                 </div>
                         )}
 
+                        <!-- Invited By -->
                         <p class="text-sm text-gray-600 mb-3">
                             <span class="font-semibold">Invited by:</span>{' '}
                             <a href={talk.invitedBy.link} class="text-blue-600 hover:text-blue-700 hover:underline">
@@ -224,6 +185,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             {' '}({talk.invitedBy.affiliation})
                         </p>
 
+                        <!-- YouTube Placeholder -->
                         {talk.youtubeEmbed && (
                                 <div class="mt-4 rounded-xl overflow-hidden shadow-lg">
                                     <div class="relative aspect-video youtube-placeholder" data-src={talk.youtubeEmbed}>
@@ -241,17 +203,16 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                     </div>
                 </div>
         ) : (
-                <>
+            <!-- Full Card Layout -->
+                <Fragment>
                     <h3 class="text-xl font-bold text-gray-800 mb-3 leading-tight">{talk.title}</h3>
 
+                    <!-- Abstract -->
                     <details class="mb-4 group">
-                        <summary
-                                class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
+                        <summary class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium cursor-pointer transition-colors list-none">
                             <span class="text-sm">Abstract</span>
-                            <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none"
-                                 stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M19 9l-7 7-7-7"></path>
+                            <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </summary>
                         <p class="text-gray-600 text-sm leading-relaxed mt-3 pl-4 border-l-2 border-blue-200">
@@ -259,14 +220,14 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                         </p>
                     </details>
 
+                    <!-- Download Buttons -->
                     {(talk.pdf || talk.video) && (
                             <div class="flex flex-wrap gap-2 mb-4">
                                 {talk.pdf && (
                                         <a href={`/presentations/${talk.pdf}`} download
                                            class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm rounded-lg hover:shadow-lg transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                             </svg>
                                             PDF
                                         </a>
@@ -275,10 +236,8 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                         <a href={talk.video} download
                                            class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm rounded-lg hover:shadow-lg transition-all">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
                                             Video
                                         </a>
@@ -286,7 +245,9 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             </div>
                     )}
 
+                    <!-- Presenter Info & Metadata -->
                     <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Presenter Avatar & Name -->
                         <div class="flex md:flex-col justify-center items-center gap-4 md:w-32">
                             {talk.presenter.photo ? (
                                     <a href={talk.presenter.link}>
@@ -310,7 +271,9 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             </div>
                         </div>
 
+                        <!-- Metadata Column -->
                         <div class="flex-1">
+                            <!-- Time Zones (only for upcoming talks) -->
                             {!past && talk.times && (
                                     <div class="grid sm:grid-cols-2 gap-2 mb-4">
                                         {[
@@ -330,6 +293,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                     </div>
                             )}
 
+                            <!-- Keywords -->
                             {talk.keywords && talk.keywords.length > 0 && (
                                     <div class="flex flex-wrap gap-2 mb-3">
                                         {talk.keywords.slice(0, 4).map((keyword) => (
@@ -351,6 +315,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                     </div>
                             )}
 
+                            <!-- Invited By -->
                             <p class="text-sm text-gray-600">
                                 <span class="font-semibold">Invited by:</span>{' '}
                                 <a href={talk.invitedBy.link} class="text-blue-600 hover:text-blue-700 hover:underline">
@@ -361,6 +326,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                         </div>
                     </div>
 
+                    <!-- YouTube Embed (only for past talks) -->
                     {past && talk.youtubeEmbed && (
                             <div class="mt-6 rounded-xl overflow-hidden shadow-lg">
                                 <div class="relative aspect-video">
@@ -375,7 +341,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                                 </div>
                             </div>
                     )}
-                </>
+                </Fragment>
         )}
     </div>
 </article>
@@ -388,13 +354,11 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
         const expandedContent = card.querySelector('.compact-expanded-content');
         const header = card.querySelector('#card-header');
 
+        // Toggle expand/collapse on header click
         if (header && expandedContent) {
             header.addEventListener('click', (e) => {
-                // Ignore clicks on links or buttons
                 if (e.target.closest('a, button, summary')) return;
                 expandedContent.classList.toggle('hidden');
-                // card.classList.toggle('ring-2');
-                // card.classList.toggle('ring-blue-500');
             });
         }
 
@@ -408,8 +372,7 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
             iframe.src = src;
             iframe.title = 'YouTube video player';
             iframe.className = 'absolute inset-0 w-full h-full';
-            iframe.allow =
-                'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;';
             iframe.referrerPolicy = 'strict-origin-when-cross-origin';
             iframe.allowFullscreen = true;
 

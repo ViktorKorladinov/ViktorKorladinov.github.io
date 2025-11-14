@@ -12,24 +12,19 @@ const {pastTalks, upcomingTalks} = await getTalks()
 
 <Layout title="Scheduling Seminar">
     <!--Hero Content-->
-    <div class="relative overflow-hidden h-screen mb-10">
-        <div class="absolute inset-0 bg-cover bg-center brightness-50 blur-sm scale-105"
-             style={`background-image: url(${gantt.src});`}/>
-
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/60 via-blue-700/40 to-transparent"></div>
-
-        <div class="relative max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-20 text-center text-white">
+    <div class="relative overflow-hidden mb-10">
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-20 text-center ">
             <div class="inline-flex items-center gap-3 px-2 py-2 bg-white/20 backdrop-blur-md rounded-full shadow-sm mb-6">
-                <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
                     <line x1="8" y1="2" x2="8" y2="6"></line>
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                <span class="text-sm font-medium text-white">Virtual Seminar Series</span>
+                <span class="text-sm font-medium ">Virtual Seminar Series</span>
             </div>
 
-            <h1 class="text-5xl lg:text-6xl font-bold mb-6 text-white drop-shadow-md">
+            <h1 class="text-5xl lg:text-6xl font-bold mb-6  drop-shadow-md">
                 Scheduling Seminar
             </h1>
 
