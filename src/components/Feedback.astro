@@ -16,26 +16,6 @@
     </div>
 
     <div class="bg-white rounded-2xl shadow-md border border-gray-100 px-6 h-[625px] lg:px-8 pb-6 lg:pb-6 hover:shadow-xl transition-shadow">
-        <!-- Success Message -->
-        <div id="success-message" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <p class="text-green-800 font-medium">Thank you! Your feedback has been sent successfully.</p>
-            </div>
-        </div>
-
-        <!-- Error Message -->
-        <div id="error-message" class="hidden absolute left-1/2 top-1 mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                </svg>
-                <p class="text-red-800 font-medium" id="error-text">Something went wrong. Please try again.</p>
-            </div>
-        </div>
-
         <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-5">
             <input type="hidden" name="access_key" value="d7fe14c3-1822-4e89-ba5a-83a8bb111adb">
 
@@ -106,12 +86,12 @@
 </section>
 
 <script>
+    import {green} from "yoctocolors";
+
     const form = document.getElementById('feedback-form');
     const submitBtn = document.getElementById('submit-btn');
     const buttonText = document.getElementById('button-text');
     const loadingSpinner = document.getElementById('loading-spinner');
-    const successMessage = document.getElementById('success-message');
-    const errorMessage = document.getElementById('error-message');
     const errorText = document.getElementById('error-text');
 
     // Null checks
@@ -120,10 +100,6 @@
     } else {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Hide any previous messages
-            successMessage.classList.add('hidden');
-            errorMessage.classList.add('hidden');
 
             // Show loading state
             buttonText.textContent = 'Sending...';
@@ -142,33 +118,26 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    // Show success message
-                    successMessage.classList.remove('hidden');
                     form.reset();
-
-                    // Scroll to success message
-                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
+                    submitBtn.classList.add('bg-green-600');
                     // Hide success message after 5 seconds
                     setTimeout(() => {
-                        successMessage.classList.add('hidden');
+                        submitBtn.classList.remove('bg-green-600')
                     }, 5000);
                 } else {
                     // Show error message
-                    errorText.textContent = data.message || 'Something went wrong. Please try again.';
-                    errorMessage.classList.remove('hidden');
+                    alert(data.message || 'Something went wrong. Please try again.');
                 }
 
             } catch (error) {
                 // Show error message
-                errorText.textContent = 'Network error. Please check your connection and try again.';
-                errorMessage.classList.remove('hidden');
+                alert('Network error. Please check your connection and try again.');
             } finally {
                 // Reset button state
                 buttonText.textContent = 'Send Feedback';
                 loadingSpinner.classList.add('hidden');
                 submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed', 'bg-green-600');
             }
         });
     }
