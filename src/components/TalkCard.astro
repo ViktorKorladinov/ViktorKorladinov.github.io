@@ -1,6 +1,6 @@
 ---
 import {Image} from "astro:assets";
-const {talk, past = false, compact = false} = Astro.props;
+const {talk, past = false, compactable = false} = Astro.props;
 
 // 1. Define Continent Colors and SVGs
 const continentMap = {
@@ -46,12 +46,12 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
 ---
 
 <article class={`bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border-l-4 
-                    snap-start shrink-0 ${finalBorderClass} ${compact ? 'hover:scale-[1.02] cursor-pointer' : ''}`}
+                    snap-start shrink-0 ${finalBorderClass} hover:scale-[1.02]`}
          data-card-id={cardId}>
-    <div class={compact ? 'p-4' : 'p-6'}>
-        {compact ? (
+    <div class={compactable ? 'p-4' : 'p-6'}>
+        {compactable ? (
                 <div class="compact-card-content">
-                    <div class="flex flex-col sm:flex-row items-center gap-4" id="card-header">
+                    <div class="flex flex-col sm:flex-row items-center gap-4 hover:cursor-pointer" id="card-header">
                         <div class="flex flex-col sm:flex-row items-start gap-3 flex-1 min-w-0">
                             {talk.presenter.photo ? (
                                     <Image
@@ -303,11 +303,31 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             {!past && talk.times && (
                                     <div class="grid sm:grid-cols-2 gap-2 mb-4">
                                         {[
-                                            {city: 'UTC', time: talk.times.utc, icon: '🌍', border: 'border-l-4 border-gray-200'},
-                                            {city: 'Prague', time: talk.times.prague, icon: '🇨🇿', border: 'border-l-4 border-yellow-400'},
-                                            {city: 'New York', time: talk.times.newYork, icon: '🇺🇸', border: 'border-l-4 border-orange-400'},
-                                            {city: 'Shanghai', time: talk.times.shanghai, icon: '🇨🇳', border: 'border-l-4 border-blue-400'}
-                                        ].map(({city, time, icon,border}) => (
+                                            {
+                                                city: 'UTC',
+                                                time: talk.times.utc,
+                                                icon: '🌍',
+                                                border: 'border-l-4 border-gray-200'
+                                            },
+                                            {
+                                                city: 'Prague',
+                                                time: talk.times.prague,
+                                                icon: '🇨🇿',
+                                                border: 'border-l-4 border-yellow-400'
+                                            },
+                                            {
+                                                city: 'New York',
+                                                time: talk.times.newYork,
+                                                icon: '🇺🇸',
+                                                border: 'border-l-4 border-orange-400'
+                                            },
+                                            {
+                                                city: 'Shanghai',
+                                                time: talk.times.shanghai,
+                                                icon: '🇨🇳',
+                                                border: 'border-l-4 border-blue-400'
+                                            }
+                                        ].map(({city, time, icon, border}) => (
                                                 <div class=`flex  ${border} items-center gap-2 px-3 py-2 bg-gradient-to-r from-blue-50 to-slate-50 rounded-lg`>
                                                     <span>{icon}</span>
                                                     <div class="flex-1 min-w-0">
@@ -349,7 +369,6 @@ const image = images[`/src/assets/photos/${talk.presenter.photo}`]()
                             </p>
                         </div>
                     </div>
-
                     {past && talk.youtubeEmbed && (
                             <div class="mt-6 rounded-xl overflow-hidden shadow-lg">
                                 <div class="relative aspect-video">

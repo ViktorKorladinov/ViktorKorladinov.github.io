@@ -62,11 +62,11 @@ const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Contact"]
     </div>
 
     <!--Social Media Links-->
-    <div class="w-full mx-auto px-6 lg:px-8 mb-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
 
-        <div class="flex justify-center gap-6">
+        <div class="w-full flex justify-center gap-6">
 
-            <div class="w-full lg:w-10/12 grid grid-cols-2 md:grid-cols-4 gap-10">
+            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-10">
 
                 <a href="https://www.youtube.com/channel/UCUoCNnaAfw5NAntItILFn4A/live"
                    class="group relative bg-white p-2 sm:p-4 rounded-xl shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col items-center justify-center text-center h-full">
@@ -117,7 +117,6 @@ const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Contact"]
 
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-6 lg:px-8 pb-20">
         <!-- Talks -->
@@ -127,23 +126,17 @@ const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Contact"]
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-1 h-8 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full"></div>
                     <h2 class="text-3xl font-bold text-gray-800">Upcoming Talks</h2>
-                    {upcomingTalks.length > 0 && (
-                            <div class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full animate-pulse">
-                                LIVE
-                            </div>
-                    )}
                 </div>
 
                 <div class="space-y-6">
-                    {upcomingTalks.map(talk => (
+                    {upcomingTalks.toReversed().map(talk => (
                             <TalkCard talk={talk} past={false}/>
                     ))}
                 </div>
             </div>
-
             <!-- Past Talks -->
             <div>
-                <div class="flex items-center gap-3">
+                <div class="pl-2 flex items-center gap-3">
                     <div class="w-1 h-8 bg-gradient-to-b from-gray-600 to-gray-400 rounded-full"></div>
                     <h2 class="text-3xl font-bold text-gray-800">Past Talks</h2>
                     <div class="px-3 py-1 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">{pastTalks.length}</div>
@@ -152,11 +145,11 @@ const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Contact"]
                 {pastTalks.length > 0 && (
                         <>
                             <!-- Compact list of remaining talks in scrollable container -->
-                            <div class="mt-6 p-5 max-h-[840px] overflow-y-auto space-y-3 pr-2 snap-y
+                            <div class="mt-6 p-2 max-h-[840px] overflow-y-auto space-y-3 pr-2 snap-y
                             scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 scroll-pt-2">
                                 {pastTalks.map(talk => (
                                         <div class="snap-start"> <!-- Add this wrapper -->
-                                            <TalkCard talk={talk} past={true} compact={true}/>
+                                            <TalkCard talk={talk} past={true} compactable={true}/>
                                         </div>
                                 ))}
                             </div>
