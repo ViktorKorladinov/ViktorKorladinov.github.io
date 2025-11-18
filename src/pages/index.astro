@@ -6,9 +6,10 @@ import {Image} from 'astro:assets';
 import gantt from "../assets/gantt.png"
 import CoChairs from "../components/CoChairs.astro";
 import CommitteeGrid from "../components/CommitteeGrid.astro";
+import Feedback from "../components/Feedback.astro";
 
 const {pastTalks, upcomingTalks} = await getTalks()
-const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Contact"]
+const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Feedback"];
 ---
 
 <Layout title="Scheduling Seminar">
@@ -165,22 +166,25 @@ const nav_links = ["PC co-chairs", "Program committee", "Calendar", "Contact"]
         <CoChairs/>
         <CommitteeGrid/>
 
-        <!-- Calendar Section -->
-        <section id="Calendar" class="mt-20">
-            <div class="flex items-center gap-3 mb-6">
-                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                <h2 class="text-3xl font-bold text-gray-800">Events Calendar</h2>
-            </div>
-            <div class="bg-white rounded-2xl shadow-lg border h-[400px] border-gray-100 flex items-center justify-center">
-                <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=2&amp;bgcolor=%234285F4&amp;ctz=Europe%2FPrague&amp;src=Mml0YXVjNmdhZGZsNjRsZWZxdDhiczgzZmtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23039BE5&amp;showTitle=0&amp;showNav=1&amp;showDate=1&amp;showPrint=1&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA"
-                        width="100%" height="100%" class="rounded-2xl"></iframe>
-            </div>
-        </section>
+        <!-- Calendar and Feedback Section -->
+        <div class="grid xl:grid-cols-2 gap-8">
+            <section id="Calendar" class="mt-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <h2 class="text-3xl font-bold text-gray-800">Events Calendar</h2>
+                </div>
+                <div class="bg-white h-[625px] hover:shadow-xl rounded-2xl shadow-lg border border-gray-100 flex items-center justify-center">
+                    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=2&amp;bgcolor=%234285F4&amp;ctz=Europe%2FPrague&amp;src=Mml0YXVjNmdhZGZsNjRsZWZxdDhiczgzZmtAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23039BE5&amp;showTitle=0&amp;showNav=1&amp;showDate=1&amp;showPrint=1&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA"
+                            width="100%" height="100%" class="rounded-2xl"></iframe>
+                </div>
+            </section>
+            <Feedback/>
+        </div>
 
     </div>
 
