@@ -18,12 +18,11 @@ const borderClass = getBorderClass(talk.presenter.continent);
   <div class={compactable ? 'p-4' : 'p-6'}>
     <div class="compact-card-content">
       <div class="flex flex-col sm:flex-row items-center gap-4 hover:cursor-pointer" id="card-header">
-        <div class="flex flex-col sm:flex-row items-start gap-3 flex-1 min-w-0">
+        <div class="flex flex-row items-start gap-3 flex-1 w-full">
           <PresenterAvatar presenter={talk.presenter} size="medium" />
           
           <div class="flex-1 min-w-0 break-words text-center sm:text-left">
-            <h3 class="text-base font-semibold text-gray-800 line-clamp-2 leading-snug mb-1 break-words" 
-                style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem;">
+            <h3 class="talk-title text-base font-semibold text-gray-800 line-clamp-2 mb-1 break-words" title={talk.title}>
               {talk.title}
             </h3>
             <p class="text-sm text-gray-600 break-words">
@@ -68,9 +67,11 @@ const borderClass = getBorderClass(talk.presenter.continent);
 
     if (header && expandedContent) {
       header.addEventListener('click', (e) => {
-        if (e.target.closest('a, button, summary')) return;
-        expandedContent.classList.toggle('hidden');
-      });
+      if (e.target.closest('a, button, summary')) return;
+      expandedContent.classList.toggle('hidden');
+      card.classList.toggle('expanded');
+});
+
     }
 
     card.addEventListener('click', (e) => {
@@ -91,3 +92,19 @@ const borderClass = getBorderClass(talk.presenter.continent);
     });
   })();
 </script>
+<style>
+
+.talk-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+article.expanded .talk-title {
+  -webkit-line-clamp: unset;
+  display: block;
+  overflow: visible;
+}
+</style>
